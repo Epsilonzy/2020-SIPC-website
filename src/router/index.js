@@ -1,27 +1,35 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Router from 'vue-router'
 
-Vue.use(VueRouter)
+Vue.use(Router)
 
-  const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
-
-const router = new VueRouter({
-  routes
+export default new Router({
+    historyMode: false,
+    routes: [{
+        //主页
+        path: '/',
+        name: 'index',
+        component: () =>
+            import ('../pages/index/index.vue')
+    }, {
+        //动态新闻页
+        path: '/dynamic',
+        name: 'Dynamic',
+        component: () =>
+            import ('../pages/dynamic/index.vue'),
+        //浏览新闻的详细页面（作为子页面运行）
+        children: []
+    }, {
+        //留言板页
+        path: '/msgBoard',
+        name: 'Board',
+        component: () =>
+            import ('../pages/msgBoard/index.vue')
+    }, {
+        //介绍页面
+        path: '/about',
+        name: 'Name',
+        component: () =>
+            import ('../pages/about/index.vue')
+    }]
 })
-
-export default router
