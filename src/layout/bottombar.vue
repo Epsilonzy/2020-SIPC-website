@@ -1,5 +1,7 @@
 <template>
-    <div></div>
+    <div class="bottombar">
+        <p>学生创新实践中心©2010-{{nowYear}}</p>
+    </div>
 </template>
 
 <script>
@@ -8,7 +10,7 @@
         props:{},
         data(){
             return{
-               
+               nowYear:new Date().getFullYear()
             }
         },
         computed: {
@@ -30,5 +32,14 @@
 </script>
 
 <style lang='scss' scoped>
-    
+    .bottombar{
+        width:100%;
+        background-color: black;
+        >p{
+            font-size:1rem;
+            text-align: center;
+            color:white;
+            padding:30px;
+        }
+    }
 </style>

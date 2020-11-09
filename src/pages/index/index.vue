@@ -1,31 +1,43 @@
 <template>
     <div class="container">
-        <!-- <div ref="navbar"> -->
         <navbar :watchTopStyle="true"></navbar>
-        <!-- </div> -->
-        <Parallax :speedFactor="0.25" direction="down" fixedClass="is-fixed">
-            <img :src="bannerImg">
+        <Parallax class="parallax" :speedFactor="0.25" direction="down" fixedClass="is-fixed">
+            <img class="bannerImg" :src="bannerImg">
         </Parallax>
-        <div class="section"></div>
+        <triD></triD>
+        <div class="bigTitle">
+            <div>
+                <p>学生创新实践中心</p>
+                <p>Student Innovation and Practice center</p>
+                <p>——TUT SCSE</p>
+            </div>
+        </div>
+        <div class="section">
+            <div class="introduction">
+                <h1>{{introduction.title}}</h1>
+                <p v-for="(item,index) in introduction.content" :key=index>
+                    {{item}}
+                </p>
+            </div>
+        </div>
+        <div class="section">
+            <timeline></timeline>
+        </div>
+        <bottombar></bottombar>
     </div>
 </template>
 
 <script>
     import Parallax from 'vue-parallaxy'
+    import triD from '@/layout/triDecoration.vue'
+    import timeline from '@/components/timeline.vue'
     //静态图片
     import bannerImg from '@/assets/banner.jpg'
     export default {
-        components:{Parallax},
+        components:{Parallax,triD,timeline},
         props:{},
         data(){
             return{
-               swiperOption: {
-                    loop:true,
-                    autoplay:1000,
-                    speed:1000
-                    // Some Swiper option/callback...
-                },
-                windowHeight:0,
                 changeNavbar:true
             }
         },
@@ -35,29 +47,22 @@
             },
             bannerImg(){
                 return bannerImg;
+            },
+            introduction(){
+                return this.$store.state.introduction;
             }
         },
         watch: {
            
         },
         methods: {
-        //    watchNavbar(){
-        //        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-        //        if(scrollTop<=200){
-        //            this.changeNavbar = true;
-        //        } else {
-        //            this.changeNavbar = false;
-        //        }
-        //    }
+
         },
         created() {
            
         },
         mounted() {
-            // console.log('Current Swiper instance object', this.swiper)
-            // this.mySwiper.slideTo(0, 1000, true);
-            this.windowHeight = document.body.clientHeight-80;
-            // window.addEventListener('scroll',this.watchNavbar);
+            
         },
 };
 </script>
@@ -65,37 +70,86 @@
 <style lang='scss' scoped>
     .container{
         width:100%;
+        position: relative;
+        overflow: hidden;
+        min-height:100vh;
+        .bigTitle{
+            position:absolute;
+            top:0;
+            width:100%;
+            height:100vh;
+            display:flex;
+            user-select: none;
+            >div{
+                margin:auto;
+                p:nth-child(1){
+                    width:100%;
+                    text-align: center;
+                    margin-top:-60px;
+                    font-size: 10rem;
+                    color:white;
+                }
+                p:nth-child(2){
+                    width:100%;
+                    text-align: center;
+                    margin:auto;
+                    font-size: 5rem;
+                    color:white;
+                }
+                p:nth-child(3){
+                    width:100%;
+                    text-align: right;
+                    margin:auto;
+                    font-size: 3rem;
+                    color:white;
+                }
+            }
+            
+        }
+        .banner{
+            width:100%;
+            height:auto;
+            position: relative;
+            z-index:-999;
+            vertical-align: middle;
+            // display: table-cell;
+            // text-align: center;
+            >img{
+                width:100%;
+                height:100%;
+            }
+        }
         .bannerImg{
             width:100%;
         }
+        .introduction{
+            width:1280px;
+            margin:auto;
+            padding:30px 0 50px;
+            >h1{
+                padding-left:300px;
+            }
+            >p{
+                text-indent:2rem;
+                padding:10px 300px;
+            }
+        }
+    }
+    .parallax{
+        height:100vh !important;
     }
     .section{
         position:relative;
         width:100%;
-        height:100vh;
-        background-color: white;
-        overflow-x: hidden;
     }
-    .section:after{
-        content:"";
-        position:absolute;
-        display:block;
-        top:-30vh;
-        width:100%;
-        height:80px;
-        background-color: black;
-        // border-color: black transparent;
-        // border-width: 0 0 30vh 100vw;
-        // border-style: solid;
-    }
-    .box{
-        width:100%;
-        height:100vh;
-        background-color: red;
-    }
-    .box2{
-        width:100%;
-        height:100vh;
-        background-color: blue;
-    }
+    // .box{
+    //     width:100%;
+    //     height:100vh;
+    //     background-color: red;
+    // }
+    // .box2{
+    //     width:100%;
+    //     height:100vh;
+    //     background-color: blue;
+    // }
 </style>
